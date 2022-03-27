@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Post;
+
 class HomeController extends Controller
 {
     /**
@@ -19,8 +21,12 @@ class HomeController extends Controller
      *
      * @return \Illuminate\Contracts\Support\Renderable
      */
-    public function index()
+    public function index(): \Illuminate\Contracts\Support\Renderable
     {
-        return view('home');
+        $posts = Post::orderByDesc('created_at')->get();
+
+        return view('home', [
+            'posts' => $posts
+        ]);
     }
 }
